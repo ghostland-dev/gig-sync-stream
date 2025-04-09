@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,37 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+                // GigSync custom colors
+                gigsync: {
+                    50: '#f0f6ff',
+                    100: '#e0edff',
+                    200: '#c7dfff',
+                    300: '#a0caff',
+                    400: '#72abff',
+                    500: '#3d82ff',
+                    600: '#2563ff',
+                    700: '#1c4afc',
+                    800: '#1e3edc',
+                    900: '#1e37b3',
+                    950: '#172362',
+                },
+                fiverr: {
+                    primary: '#1dbf73',
+                    secondary: '#404145',
+                },
+                upwork: {
+                    primary: '#14a800',
+                    secondary: '#108a00',
+                },
+                malt: {
+                    primary: '#fc5757',
+                    secondary: '#e83f3f',
+                },
+                codeur: {
+                    primary: '#16a0db',
+                    secondary: '#1184b7',
+                }
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,12 +115,20 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+                'pulse-subtle': {
+                    '0%, 100%': { opacity: '1' },
+                    '50%': { opacity: '0.7' }
+                }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+                'pulse-subtle': 'pulse-subtle 2s infinite ease-in-out'
+			},
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+            }
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
