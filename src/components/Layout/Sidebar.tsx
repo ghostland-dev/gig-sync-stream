@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   MessageSquare, 
   Star, 
@@ -11,7 +12,8 @@ import {
   Clock,
   AlertCircle,
   X,
-  Plus
+  Plus,
+  Home
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +24,8 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
+  const location = useLocation();
+  
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
@@ -52,12 +56,50 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
       {/* Main navigation */}
       <nav className="flex-1 overflow-y-auto p-2">
         <div className="space-y-1">
-          <NavItem icon={<MessageSquare className="h-5 w-5" />} label="Boîte de réception" badge={12} active />
-          <NavItem icon={<Star className="h-5 w-5" />} label="Favoris" />
-          <NavItem icon={<Clock className="h-5 w-5" />} label="En attente" badge={3} />
-          <NavItem icon={<AlertCircle className="h-5 w-5" />} label="Important" />
-          <NavItem icon={<Archive className="h-5 w-5" />} label="Archives" />
-          <NavItem icon={<Trash2 className="h-5 w-5" />} label="Corbeille" />
+          <NavItem 
+            icon={<Home className="h-5 w-5" />} 
+            label="Tableau de bord" 
+            to="/"
+            active={location.pathname === '/'}
+          />
+          <NavItem 
+            icon={<MessageSquare className="h-5 w-5" />} 
+            label="Boîte de réception" 
+            badge={12}
+            to="/messages"
+            active={location.pathname === '/messages'}
+          />
+          <NavItem 
+            icon={<Star className="h-5 w-5" />} 
+            label="Favoris" 
+            to="/favorites"
+            active={location.pathname === '/favorites'}
+          />
+          <NavItem 
+            icon={<Clock className="h-5 w-5" />} 
+            label="En attente" 
+            badge={3}
+            to="/pending"
+            active={location.pathname === '/pending'}
+          />
+          <NavItem 
+            icon={<AlertCircle className="h-5 w-5" />} 
+            label="Important" 
+            to="/important"
+            active={location.pathname === '/important'}
+          />
+          <NavItem 
+            icon={<Archive className="h-5 w-5" />} 
+            label="Archives" 
+            to="/archives"
+            active={location.pathname === '/archives'}
+          />
+          <NavItem 
+            icon={<Trash2 className="h-5 w-5" />} 
+            label="Corbeille" 
+            to="/trash"
+            active={location.pathname === '/trash'}
+          />
         </div>
         
         <div className="pt-4 mt-4 border-t border-sidebar-border">
@@ -65,10 +107,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
             Plateformes
           </h3>
           <div className="mt-2 space-y-1">
-            <NavItem label="Fiverr" platformColor="fiverr" badge={5} />
-            <NavItem label="Upwork" platformColor="upwork" badge={2} />
-            <NavItem label="Malt" platformColor="malt" badge={3} />
-            <NavItem label="Codeur.fr" platformColor="codeur" badge={2} />
+            <NavItem label="Fiverr" platformColor="fiverr" badge={5} to="/platform/fiverr" active={location.pathname === '/platform/fiverr'} />
+            <NavItem label="Upwork" platformColor="upwork" badge={2} to="/platform/upwork" active={location.pathname === '/platform/upwork'} />
+            <NavItem label="Malt" platformColor="malt" badge={3} to="/platform/malt" active={location.pathname === '/platform/malt'} />
+            <NavItem label="Codeur.fr" platformColor="codeur" badge={2} to="/platform/codeur" active={location.pathname === '/platform/codeur'} />
           </div>
         </div>
         
@@ -77,9 +119,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
             Outils
           </h3>
           <div className="mt-2 space-y-1">
-            <NavItem icon={<BarChart className="h-5 w-5" />} label="Statistiques" />
-            <NavItem icon={<Users className="h-5 w-5" />} label="Clients" />
-            <NavItem icon={<Settings className="h-5 w-5" />} label="Paramètres" />
+            <NavItem 
+              icon={<BarChart className="h-5 w-5" />} 
+              label="Statistiques" 
+              to="/statistics"
+              active={location.pathname === '/statistics'}
+            />
+            <NavItem 
+              icon={<Users className="h-5 w-5" />} 
+              label="Clients" 
+              to="/clients"
+              active={location.pathname === '/clients'}
+            />
+            <NavItem 
+              icon={<Settings className="h-5 w-5" />} 
+              label="Paramètres" 
+              to="/settings"
+              active={location.pathname === '/settings'}
+            />
           </div>
         </div>
       </nav>
@@ -104,6 +161,7 @@ interface NavItemProps {
   badge?: number;
   active?: boolean;
   platformColor?: 'fiverr' | 'upwork' | 'malt' | 'codeur';
+  to: string;
 }
 
 const NavItem: React.FC<NavItemProps> = ({ 
@@ -111,7 +169,8 @@ const NavItem: React.FC<NavItemProps> = ({
   label, 
   badge, 
   active = false,
-  platformColor
+  platformColor,
+  to
 }) => {
   let colorClasses = active 
     ? "bg-sidebar-accent text-sidebar-accent-foreground" 
@@ -136,8 +195,8 @@ const NavItem: React.FC<NavItemProps> = ({
   }
 
   return (
-    <a 
-      href="#" 
+    <Link 
+      to={to}
       className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md ${colorClasses} transition-colors duration-200`}
     >
       {icon ? icon : (
@@ -149,6 +208,6 @@ const NavItem: React.FC<NavItemProps> = ({
           {badge}
         </Badge>
       )}
-    </a>
+    </Link>
   );
 };
