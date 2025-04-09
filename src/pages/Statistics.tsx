@@ -18,7 +18,7 @@ import { Bar, Line, Pie, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGr
 const BarChart = ({ data, className }: { data: any[], className?: string }) => (
   <ChartContainer className={className} config={{}}>
     <ResponsiveContainer width="100%" height="100%">
-      <Bar data={data}>
+      <Bar data={data} dataKey="value">
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
@@ -32,7 +32,7 @@ const BarChart = ({ data, className }: { data: any[], className?: string }) => (
 const LineChart = ({ data, className }: { data: any[], className?: string }) => (
   <ChartContainer className={className} config={{}}>
     <ResponsiveContainer width="100%" height="100%">
-      <Line data={data}>
+      <Line data={data} dataKey="Fiverr">
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />
         <YAxis />
