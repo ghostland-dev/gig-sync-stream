@@ -14,7 +14,8 @@ const mockMessages = [
     platform: "fiverr",
     sender: "John Doe",
     subject: "Projet de site web e-commerce",
-    content: "Bonjour, je suis intéressé par vos services pour créer un site e-commerce...",
+    preview: "Bonjour, je suis intéressé par vos services pour créer un site e-commerce...",
+    body: "Bonjour,\n\nJe suis intéressé par vos services pour créer un site e-commerce pour ma boutique de vêtements. J'aimerais discuter des fonctionnalités dont j'ai besoin et obtenir un devis.\n\nPouvez-vous me contacter pour en discuter plus en détail?\n\nCordialement,\nJohn Doe",
     date: "2025-04-08T14:30:00",
     unread: true,
     starred: false,
@@ -24,7 +25,8 @@ const mockMessages = [
     platform: "upwork",
     sender: "Alice Smith",
     subject: "Développement d'une application mobile",
-    content: "Salut, j'ai besoin d'un développeur pour une application mobile native...",
+    preview: "Salut, j'ai besoin d'un développeur pour une application mobile native...",
+    body: "Salut,\n\nJ'ai besoin d'un développeur pour une application mobile native pour iOS et Android. L'application permettra aux utilisateurs de suivre leurs habitudes quotidiennes et de recevoir des rappels.\n\nAvez-vous de l'expérience dans ce domaine? Quel serait votre tarif pour ce projet?\n\nMerci,\nAlice Smith",
     date: "2025-04-07T09:15:00",
     unread: false,
     starred: true,
@@ -34,7 +36,8 @@ const mockMessages = [
     platform: "malt",
     sender: "Pierre Dupont",
     subject: "Refonte de site WordPress",
-    content: "Bonjour, je cherche un expert WordPress pour refaire mon site vitrine...",
+    preview: "Bonjour, je cherche un expert WordPress pour refaire mon site vitrine...",
+    body: "Bonjour,\n\nJe cherche un expert WordPress pour refaire mon site vitrine qui est devenu obsolète. J'aimerais un design moderne et responsive, ainsi qu'une optimisation SEO.\n\nPouvez-vous me partager votre portfolio de sites WordPress que vous avez réalisés?\n\nCordialement,\nPierre Dupont",
     date: "2025-04-06T16:45:00",
     unread: true,
     starred: false,
@@ -44,7 +47,8 @@ const mockMessages = [
     platform: "codeur",
     sender: "Marie Martin",
     subject: "Intégration HTML/CSS",
-    content: "Bonjour, j'ai des maquettes Figma à intégrer en HTML/CSS responsive...",
+    preview: "Bonjour, j'ai des maquettes Figma à intégrer en HTML/CSS responsive...",
+    body: "Bonjour,\n\nJ'ai des maquettes Figma à intégrer en HTML/CSS responsive pour le site de mon entreprise. Il s'agit d'environ 5 pages avec quelques animations simples.\n\nÊtes-vous disponible dans les deux prochaines semaines pour réaliser ce travail?\n\nMerci d'avance,\nMarie Martin",
     date: "2025-04-05T11:20:00",
     unread: false,
     starred: false,
@@ -80,7 +84,7 @@ export default function Messages() {
         {/* Message detail panel */}
         <div className="w-full md:w-2/3 overflow-y-auto bg-background">
           {selectedMessage ? (
-            <MessageDetail message={selectedMessage} />
+            <MessageDetail message={selectedMessage} onBack={() => setSelectedMessageId(null)} />
           ) : (
             <EmptyState type="no-message-selected" />
           )}

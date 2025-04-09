@@ -2,7 +2,7 @@
 import React from "react";
 import { Dashboard } from "@/components/Layout/Dashboard";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, LineChart, DonutChart } from "@/components/ui/chart";
+import { ChartContainer } from "@/components/ui/chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   BarChart as BarChartIcon, 
@@ -12,6 +12,59 @@ import {
   TrendingUp,
   Users
 } from "lucide-react";
+import { Bar, Line, Pie, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, Cell } from "recharts";
+
+// Custom chart components
+const BarChart = ({ data, className }: { data: any[], className?: string }) => (
+  <ChartContainer className={className} config={{}}>
+    <ResponsiveContainer width="100%" height="100%">
+      <Bar data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Bar dataKey="value" fill="var(--primary)" />
+      </Bar>
+    </ResponsiveContainer>
+  </ChartContainer>
+);
+
+const LineChart = ({ data, className }: { data: any[], className?: string }) => (
+  <ChartContainer className={className} config={{}}>
+    <ResponsiveContainer width="100%" height="100%">
+      <Line data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis />
+        <Tooltip />
+        <Line type="monotone" dataKey="Fiverr" stroke="var(--fiverr-primary)" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="Upwork" stroke="var(--upwork-primary)" />
+        <Line type="monotone" dataKey="Malt" stroke="var(--malt-primary)" />
+        <Line type="monotone" dataKey="Codeur" stroke="var(--codeur-primary)" />
+      </Line>
+    </ResponsiveContainer>
+  </ChartContainer>
+);
+
+const DonutChart = ({ data, className }: { data: any[], className?: string }) => (
+  <ChartContainer className={className} config={{}}>
+    <ResponsiveContainer width="100%" height="100%">
+      <Pie
+        data={data}
+        cx="50%"
+        cy="50%"
+        innerRadius={60}
+        outerRadius={80}
+        paddingAngle={5}
+        dataKey="value"
+      >
+        {data.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={entry.color} />
+        ))}
+      </Pie>
+    </ResponsiveContainer>
+  </ChartContainer>
+);
 
 export default function Statistics() {
   return (
