@@ -11,7 +11,7 @@ import { PlatformBadge } from "@/components/ui/PlatformBadge";
 const mockMessages = [
   {
     id: "1",
-    platform: "fiverr",
+    platform: "fiverr" as const,
     sender: "John Doe",
     subject: "Projet de site web e-commerce",
     preview: "Bonjour, je suis intéressé par vos services pour créer un site e-commerce...",
@@ -22,7 +22,7 @@ const mockMessages = [
   },
   {
     id: "2",
-    platform: "upwork",
+    platform: "upwork" as const,
     sender: "Alice Smith",
     subject: "Développement d'une application mobile",
     preview: "Salut, j'ai besoin d'un développeur pour une application mobile native...",
@@ -33,7 +33,7 @@ const mockMessages = [
   },
   {
     id: "3",
-    platform: "malt",
+    platform: "malt" as const,
     sender: "Pierre Dupont",
     subject: "Refonte de site WordPress",
     preview: "Bonjour, je cherche un expert WordPress pour refaire mon site vitrine...",
@@ -44,7 +44,7 @@ const mockMessages = [
   },
   {
     id: "4",
-    platform: "codeur",
+    platform: "codeur" as const,
     sender: "Marie Martin",
     subject: "Intégration HTML/CSS",
     preview: "Bonjour, j'ai des maquettes Figma à intégrer en HTML/CSS responsive...",
