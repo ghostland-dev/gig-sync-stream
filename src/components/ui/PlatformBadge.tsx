@@ -14,13 +14,13 @@ export const PlatformBadge: React.FC<PlatformBadgeProps> = ({ platform, classNam
   const getPlatformClasses = () => {
     switch (platform) {
       case "fiverr":
-        return "platform-fiverr";
+        return "border-fiverr-primary text-fiverr-primary";
       case "upwork":
-        return "platform-upwork";
+        return "border-upwork-primary text-upwork-primary";
       case "malt":
-        return "platform-malt";
+        return "border-malt-primary text-malt-primary";
       case "codeur":
-        return "platform-codeur";
+        return "border-codeur-primary text-codeur-primary";
       default:
         return "";
     }
