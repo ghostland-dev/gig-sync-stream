@@ -5,6 +5,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
+import { InstallPrompt } from "@/components/ui/install-prompt";
+import { PerformanceMonitor } from "@/components/ui/performance-monitor";
+import { usePerformance, useCoreWebVitals, useResourceTiming } from "@/hooks/usePerformance";
 import Index from "./pages/Index";
 import Messages from "./pages/Messages";
 import Statistics from "./pages/Statistics";
@@ -20,8 +23,12 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <ErrorBoundary>
+const AppContent = () => {
+  usePerformance();
+  useCoreWebVitals();
+  useResourceTiming();
+
+  return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
@@ -43,8 +50,16 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        <InstallPrompt />
+        <PerformanceMonitor />
       </TooltipProvider>
     </QueryClientProvider>
+  );
+};
+
+const App = () => (
+  <ErrorBoundary>
+    <AppContent />
   </ErrorBoundary>
 );
 
