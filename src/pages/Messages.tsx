@@ -19,6 +19,8 @@ const mockMessages = [
     date: "2025-04-08T14:30:00",
     unread: true,
     starred: false,
+    urgency: 'medium' as const,
+    labels: ['nouveau-client', 'e-commerce']
   },
   {
     id: "2",
@@ -30,6 +32,8 @@ const mockMessages = [
     date: "2025-04-07T09:15:00",
     unread: false,
     starred: true,
+    urgency: 'high' as const,
+    labels: ['mobile', 'urgent']
   },
   {
     id: "3",
@@ -41,6 +45,8 @@ const mockMessages = [
     date: "2025-04-06T16:45:00",
     unread: true,
     starred: false,
+    urgency: 'low' as const,
+    labels: ['wordpress', 'refonte']
   },
   {
     id: "4",
@@ -52,6 +58,8 @@ const mockMessages = [
     date: "2025-04-05T11:20:00",
     unread: false,
     starred: false,
+    urgency: 'medium' as const,
+    labels: ['integration', 'figma']
   },
 ];
 

@@ -16,7 +16,10 @@ const mockArchivedMessages = [
     date: "15 mars",
     unread: false,
     platform: "fiverr" as const,
-    body: "Bonjour,\n\nMerci pour l'excellent travail sur notre site vitrine pour le restaurant 'Le Petit Jardin'. Le client est ravi du résultat final.\n\nLe site est maintenant en ligne et génère déjà des réservations. Nous n'hésiterons pas à faire appel à vos services pour de futurs projets.\n\nExcellente continuation,\nJulie Legrand\nAgence WebDesign Pro"
+    body: "Bonjour,\n\nMerci pour l'excellent travail sur notre site vitrine pour le restaurant 'Le Petit Jardin'. Le client est ravi du résultat final.\n\nLe site est maintenant en ligne et génère déjà des réservations. Nous n'hésiterons pas à faire appel à vos services pour de futurs projets.\n\nExcellente continuation,\nJulie Legrand\nAgence WebDesign Pro",
+    starred: false,
+    urgency: 'low' as const,
+    labels: ['termine', 'restaurant', 'site-vitrine']
   },
   {
     id: "arch2",
@@ -26,7 +29,10 @@ const mockArchivedMessages = [
     date: "10 mars",
     unread: false,
     platform: "upwork" as const,
-    body: "Bonjour,\n\nL'application mobile pour notre startup FinTech a été livrée avec succès. Tous les tests sont passés et l'app est maintenant sur les stores.\n\nNos utilisateurs adorent l'interface intuitive que vous avez créée. Les téléchargements progressent bien depuis le lancement.\n\nUn grand merci pour votre professionnalisme,\nMarc Duval\nCEO - FinTech Solutions"
+    body: "Bonjour,\n\nL'application mobile pour notre startup FinTech a été livrée avec succès. Tous les tests sont passés et l'app est maintenant sur les stores.\n\nNos utilisateurs adorent l'interface intuitive que vous avez créée. Les téléchargements progressent bien depuis le lancement.\n\nUn grand merci pour votre professionnalisme,\nMarc Duval\nCEO - FinTech Solutions",
+    starred: false,
+    urgency: 'low' as const,
+    labels: ['termine', 'mobile', 'fintech']
   },
   {
     id: "arch3",
@@ -36,7 +42,10 @@ const mockArchivedMessages = [
     date: "5 mars",
     unread: false,
     platform: "malt" as const,
-    body: "Bonjour,\n\nLa formation React que vous avez dispensée à notre équipe de 8 développeurs s'est très bien déroulée. Tous ont obtenu leur certification.\n\nL'équipe est maintenant autonome sur React et Redux. La montée en compétences est remarquable.\n\nNous recommanderons vos services de formation.\n\nCordialement,\nSophie Bernard\nCTO - DevCorp"
+    body: "Bonjour,\n\nLa formation React que vous avez dispensée à notre équipe de 8 développeurs s'est très bien déroulée. Tous ont obtenu leur certification.\n\nL'équipe est maintenant autonome sur React et Redux. La montée en compétences est remarquable.\n\nNous recommanderons vos services de formation.\n\nCordialement,\nSophie Bernard\nCTO - DevCorp",
+    starred: false,
+    urgency: 'low' as const,
+    labels: ['formation', 'react', 'termine']
   },
   {
     id: "arch4",
@@ -46,7 +55,10 @@ const mockArchivedMessages = [
     date: "1 mars",
     unread: false,
     platform: "codeur" as const,
-    body: "Bonjour,\n\nLe contrat de maintenance annuelle pour nos 3 sites web (site corporate, e-commerce et intranet) a été renouvelé pour 2024.\n\nVotre réactivité et la qualité de votre support nous donnent entière satisfaction. Aucun incident majeur en 2023.\n\nÀ bientôt pour une nouvelle année de collaboration,\nThomas Rousseau\nDirecteur IT - TechServices"
+    body: "Bonjour,\n\nLe contrat de maintenance annuelle pour nos 3 sites web (site corporate, e-commerce et intranet) a été renouvelé pour 2024.\n\nVotre réactivité et la qualité de votre support nous donnent entière satisfaction. Aucun incident majeur en 2023.\n\nÀ bientôt pour une nouvelle année de collaboration,\nThomas Rousseau\nDirecteur IT - TechServices",
+    starred: false,
+    urgency: 'low' as const,
+    labels: ['maintenance', 'contrat', 'renouvele']
   }
 ];
 

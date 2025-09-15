@@ -15,7 +15,10 @@ const mockPendingMessages = [
     date: "Il y a 2h",
     unread: true,
     platform: "fiverr" as const,
-    body: "Bonjour,\n\nJ'attends encore votre retour sur les modifications demandées pour le site WordPress. Nous avions convenu d'un délai de 48h et je n'ai toujours pas de nouvelles.\n\nPouvez-vous me tenir informé de l'avancement?\n\nMerci,\nSarah Chen"
+    body: "Bonjour,\n\nJ'attends encore votre retour sur les modifications demandées pour le site WordPress. Nous avions convenu d'un délai de 48h et je n'ai toujours pas de nouvelles.\n\nPouvez-vous me tenir informé de l'avancement?\n\nMerci,\nSarah Chen",
+    starred: false,
+    urgency: 'high' as const,
+    labels: ['wordpress', 'en-attente', 'urgent']
   },
   {
     id: "pend2",
@@ -25,7 +28,10 @@ const mockPendingMessages = [
     date: "Hier",
     unread: true,
     platform: "upwork" as const,
-    body: "Bonjour,\n\nLes maquettes sont prêtes pour validation. J'ai incorporé tous vos commentaires de la dernière réunion.\n\nEn attente de votre feedback pour passer à l'étape suivante du développement.\n\nVous pouvez voir les maquettes sur Figma : [lien]\n\nCordialement,\nDavid Martin"
+    body: "Bonjour,\n\nLes maquettes sont prêtes pour validation. J'ai incorporé tous vos commentaires de la dernière réunion.\n\nEn attente de votre feedback pour passer à l'étape suivante du développement.\n\nVous pouvez voir les maquettes sur Figma : [lien]\n\nCordialement,\nDavid Martin",
+    starred: false,
+    urgency: 'medium' as const,
+    labels: ['ui-ux', 'validation', 'en-attente']
   },
   {
     id: "pend3",
@@ -35,7 +41,10 @@ const mockPendingMessages = [
     date: "3 jours",
     unread: false,
     platform: "malt" as const,
-    body: "Bonjour,\n\nLa facture #2024-001 pour le développement de l'API REST est toujours en attente de paiement depuis 15 jours.\n\nMontant : 1,500€\nÉchéance : 15 mars 2024\n\nPouvez-vous me tenir informé du statut du paiement?\n\nMerci,\nEmma Dubois"
+    body: "Bonjour,\n\nLa facture #2024-001 pour le développement de l'API REST est toujours en attente de paiement depuis 15 jours.\n\nMontant : 1,500€\nÉchéance : 15 mars 2024\n\nPouvez-vous me tenir informé du statut du paiement?\n\nMerci,\nEmma Dubois",
+    starred: false,
+    urgency: 'high' as const,
+    labels: ['paiement', 'facture', 'en-attente']
   }
 ];
 

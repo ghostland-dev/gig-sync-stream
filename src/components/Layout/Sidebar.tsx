@@ -15,13 +15,15 @@ import {
   Plus,
   Home,
   LogOut,
-  User
+  User,
+  FileText
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useAuthContext } from '@/hooks/useAuth';
 import { useMessages } from '@/hooks/useMessages';
+import { useReply } from '@/hooks/useReply';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -45,12 +47,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
     getImportantMessages,
     getMessagesByPlatform 
   } = useMessages();
+  const { getAllDrafts } = useReply();
   
   // Get message counts
   const inboxCount = getInboxMessages().filter(m => m.unread).length;
   const favoriteCount = getFavoriteMessages().length;
   const pendingCount = getPendingMessages().length;
   const importantCount = getImportantMessages().length;
+  const draftsCount = getAllDrafts().length;
   
   const platformCounts = {
     fiverr: getMessagesByPlatform('fiverr').filter(m => m.unread).length,
@@ -139,6 +143,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
             label="Corbeille" 
             to="/trash"
             active={location.pathname === '/trash'}
+          />
+          <NavItem 
+            icon={<FileText className="h-5 w-5" />} 
+            label="Brouillons" 
+            badge={getAllDrafts().length}
+            to="/drafts"
+            active={location.pathname === '/drafts'}
           />
         </div>
         

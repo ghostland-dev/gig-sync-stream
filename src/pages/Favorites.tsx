@@ -14,7 +14,10 @@ const mockFavoriteMessages = [
     date: "Hier",
     unread: false,
     platform: "upwork" as const,
-    body: "Salut,\n\nJ'ai besoin d'un développeur pour une application mobile native pour iOS et Android. L'application permettra aux utilisateurs de suivre leurs habitudes quotidiennes et de recevoir des rappels.\n\nAvez-vous de l'expérience dans ce domaine? Quel serait votre tarif pour ce projet?\n\nMerci,\nAlice Smith"
+    body: "Salut,\n\nJ'ai besoin d'un développeur pour une application mobile native pour iOS et Android. L'application permettra aux utilisateurs de suivre leurs habitudes quotidiennes et de recevoir des rappels.\n\nAvez-vous de l'expérience dans ce domaine? Quel serait votre tarif pour ce projet?\n\nMerci,\nAlice Smith",
+    starred: true,
+    urgency: 'high' as const,
+    labels: ['mobile', 'favori']
   },
   {
     id: "fav2", 
@@ -24,7 +27,10 @@ const mockFavoriteMessages = [
     date: "2 jours",
     unread: true,
     platform: "malt" as const,
-    body: "Bonjour,\n\nJe recherche un développeur React expérimenté pour créer une boutique en ligne moderne avec panier, paiement en ligne et gestion des stocks.\n\nLe projet est bien défini avec des maquettes complètes. Budget : 5000€\n\nÊtes-vous disponible pour commencer rapidement?\n\nCordialement,\nMarc Rousseau"
+    body: "Bonjour,\n\nJe recherche un développeur React expérimenté pour créer une boutique en ligne moderne avec panier, paiement en ligne et gestion des stocks.\n\nLe projet est bien défini avec des maquettes complètes. Budget : 5000€\n\nÊtes-vous disponible pour commencer rapidement?\n\nCordialement,\nMarc Rousseau",
+    starred: true,
+    urgency: 'medium' as const,
+    labels: ['react', 'e-commerce', 'favori']
   }
 ];
 

@@ -20,6 +20,7 @@ import Pending from "./pages/Pending";
 import Important from "./pages/Important";
 import Archives from "./pages/Archives";
 import Trash from "./pages/Trash";
+import Drafts from "./pages/Drafts";
 import Platform from "./pages/Platform";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -72,6 +73,11 @@ const AppContent = () => {
             <Route path="/trash" element={
               <ProtectedRoute>
                 <Trash />
+              </ProtectedRoute>
+            } />
+            <Route path="/drafts" element={
+              <ProtectedRoute>
+                <Drafts />
               </ProtectedRoute>
             } />
             <Route path="/platform/:platform" element={

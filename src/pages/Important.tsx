@@ -15,7 +15,10 @@ const mockImportantMessages = [
     date: "Il y a 30min",
     unread: true,
     platform: "upwork" as const,
-    body: "Bonjour,\n\nURGENT: Le contrat pour le projet d'envergure (développement d'une plateforme SaaS) doit être signé avant vendredi pour respecter le planning client.\n\nValeur du contrat : 25,000€\nDurée : 6 mois\nDémarrage : 1er avril 2024\n\nMerci de me confirmer votre disponibilité dans les plus brefs délais.\n\nCordialement,\nLéa Moreau\nDirectrice Projets - TechCorp Solutions"
+    body: "Bonjour,\n\nURGENT: Le contrat pour le projet d'envergure (développement d'une plateforme SaaS) doit être signé avant vendredi pour respecter le planning client.\n\nValeur du contrat : 25,000€\nDurée : 6 mois\nDémarrage : 1er avril 2024\n\nMerci de me confirmer votre disponibilité dans les plus brefs délais.\n\nCordialement,\nLéa Moreau\nDirectrice Projets - TechCorp Solutions",
+    starred: true,
+    urgency: 'high' as const,
+    labels: ['contrat', 'important', 'urgent', 'saas']
   },
   {
     id: "imp2",
@@ -25,7 +28,10 @@ const mockImportantMessages = [
     date: "Il y a 2h",
     unread: true,
     platform: "malt" as const,
-    body: "Bonjour,\n\nExcellente nouvelle ! Notre levée de fonds de série A est finalisée (2.5M€).\n\nNous pouvons maintenant lancer le projet de refonte complète de notre application dont nous avions discuté. Le budget alloué est de 50,000€.\n\nÊtes-vous toujours intéressé? Nous souhaiterions démarrer dès que possible.\n\nBien cordialement,\nMaxime Leroy\nCTO - StartupX"
+    body: "Bonjour,\n\nExcellente nouvelle ! Notre levée de fonds de série A est finalisée (2.5M€).\n\nNous pouvons maintenant lancer le projet de refonte complète de notre application dont nous avions discuté. Le budget alloué est de 50,000€.\n\nÊtes-vous toujours intéressé? Nous souhaiterions démarrer dès que possible.\n\nBien cordialement,\nMaxime Leroy\nCTO - StartupX",
+    starred: true,
+    urgency: 'high' as const,
+    labels: ['startup', 'important', 'gros-budget']
   },
   {
     id: "imp3",
@@ -35,7 +41,10 @@ const mockImportantMessages = [
     date: "Aujourd'hui",
     unread: false,
     platform: "codeur" as const,
-    body: "Madame, Monsieur,\n\nSuite à votre candidature pour l'appel d'offres 2024-GOV-001 concernant le développement d'une plateforme gouvernementale de dématérialisation, nous avons le plaisir de vous informer que votre dossier a été présélectionné.\n\nMontant estimé : 150,000€\nDurée : 12 mois\nSoutenance : 25 mars 2024\n\nVous recevrez les détails techniques par courrier recommandé sous 48h.\n\nCordialement,\nService des Marchés Publics\nMinistère de la Transition Numérique"
+    body: "Madame, Monsieur,\n\nSuite à votre candidature pour l'appel d'offres 2024-GOV-001 concernant le développement d'une plateforme gouvernementale de dématérialisation, nous avons le plaisir de vous informer que votre dossier a été présélectionné.\n\nMontant estimé : 150,000€\nDurée : 12 mois\nSoutenance : 25 mars 2024\n\nVous recevrez les détails techniques par courrier recommandé sous 48h.\n\nCordialement,\nService des Marchés Publics\nMinistère de la Transition Numérique",
+    starred: false,
+    urgency: 'high' as const,
+    labels: ['gouvernement', 'appel-offres', 'important']
   }
 ];
 

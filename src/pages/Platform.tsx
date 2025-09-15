@@ -20,7 +20,10 @@ const platformMessages = {
       date: "10:30",
       unread: true,
       platform: "fiverr" as const,
-      body: "Bonjour,\n\nJ'ai vu votre profil et je suis intéressée par vos services pour développer un site e-commerce pour ma boutique de vêtements.\n\nMon budget est d'environ 2000€ et j'aimerais lancer le site dans les 2 mois.\n\nMerci,\nMarie"
+      body: "Bonjour,\n\nJ'ai vu votre profil et je suis intéressée par vos services pour développer un site e-commerce pour ma boutique de vêtements.\n\nMon budget est d'environ 2000€ et j'aimerais lancer le site dans les 2 mois.\n\nMerci,\nMarie",
+      starred: false,
+      urgency: 'medium' as const,
+      labels: ['e-commerce', 'nouveau-client']
     },
     {
       id: "fiverr2",
@@ -30,7 +33,10 @@ const platformMessages = {
       date: "28 mars",
       unread: false,
       platform: "fiverr" as const,
-      body: "Bonjour,\n\nJe cherche un traducteur technique pour traduire notre site web en anglais et en espagnol.\n\nLe site contient environ 20 pages. Pourriez-vous me faire une proposition?\n\nMerci,\nLucas"
+      body: "Bonjour,\n\nJe cherche un traducteur technique pour traduire notre site web en anglais et en espagnol.\n\nLe site contient environ 20 pages. Pourriez-vous me faire une proposition?\n\nMerci,\nLucas",
+      starred: false,
+      urgency: 'low' as const,
+      labels: ['traduction', 'multilangue']
     }
   ],
   upwork: [
@@ -42,7 +48,10 @@ const platformMessages = {
       date: "Hier",
       unread: true,
       platform: "upwork" as const,
-      body: "Bonjour,\n\nNous sommes une startup dans le secteur de la santé et recherchons un développeur pour créer une application mobile cross-platform.\n\nCordialement,\nAntoine Dubois"
+      body: "Bonjour,\n\nNous sommes une startup dans le secteur de la santé et recherchons un développeur pour créer une application mobile cross-platform.\n\nCordialement,\nAntoine Dubois",
+      starred: false,
+      urgency: 'high' as const,
+      labels: ['mobile', 'sante', 'startup']
     },
     {
       id: "upwork2",
@@ -52,7 +61,10 @@ const platformMessages = {
       date: "Dim.",
       unread: false,
       platform: "upwork" as const,
-      body: "Bonjour,\n\nNous avons besoin d'intégrer plusieurs solutions de paiement (Stripe, PayPal) à notre plateforme React/Node.js.\n\nBien cordialement,\nLaura Petit"
+      body: "Bonjour,\n\nNous avons besoin d'intégrer plusieurs solutions de paiement (Stripe, PayPal) à notre plateforme React/Node.js.\n\nBien cordialement,\nLaura Petit",
+      starred: false,
+      urgency: 'medium' as const,
+      labels: ['api', 'paiement', 'integration']
     }
   ],
   malt: [
@@ -64,7 +76,10 @@ const platformMessages = {
       date: "Hier",
       unread: true,
       platform: "malt" as const,
-      body: "Bonjour,\n\nJe recherche un designer UI/UX pour refondre l'interface de notre application de gestion financière.\n\nMeilleures salutations,\nSophie Martin"
+      body: "Bonjour,\n\nJe recherche un designer UI/UX pour refondre l'interface de notre application de gestion financière.\n\nMeilleures salutations,\nSophie Martin",
+      starred: false,
+      urgency: 'medium' as const,
+      labels: ['ui-ux', 'design', 'fintech']
     },
     {
       id: "malt2",
@@ -74,7 +89,10 @@ const platformMessages = {
       date: "25 mars",
       unread: false,
       platform: "malt" as const,
-      body: "Bonjour,\n\nNous lançons une nouvelle gamme de produits écologiques et cherchons un rédacteur web pour créer des fiches produits SEO-friendly.\n\nBien à vous,\nJulie Lambert"
+      body: "Bonjour,\n\nNous lançons une nouvelle gamme de produits écologiques et cherchons un rédacteur web pour créer des fiches produits SEO-friendly.\n\nBien à vous,\nJulie Lambert",
+      starred: false,
+      urgency: 'low' as const,
+      labels: ['redaction', 'seo', 'ecologie']
     }
   ],
   codeur: [
@@ -86,7 +104,10 @@ const platformMessages = {
       date: "Lun.",
       unread: false,
       platform: "codeur" as const,
-      body: "Bonjour,\n\nJe cherche un expert WordPress pour développer un plugin personnalisé pour notre site d'actualités.\n\nCordialement,\nThomas Bernard"
+      body: "Bonjour,\n\nJe cherche un expert WordPress pour développer un plugin personnalisé pour notre site d'actualités.\n\nCordialement,\nThomas Bernard",
+      starred: false,
+      urgency: 'medium' as const,
+      labels: ['wordpress', 'plugin', 'actualites']
     },
     {
       id: "codeur2",
@@ -96,7 +117,10 @@ const platformMessages = {
       date: "22 mars",
       unread: false,
       platform: "codeur" as const,
-      body: "Bonjour,\n\nJe lance ma société de conseil et recherche un designer pour créer mon identité visuelle complète.\n\nCordialement,\nPierre Durand"
+      body: "Bonjour,\n\nJe lance ma société de conseil et recherche un designer pour créer mon identité visuelle complète.\n\nCordialement,\nPierre Durand",
+      starred: false,
+      urgency: 'low' as const,
+      labels: ['design', 'identite', 'logo']
     }
   ]
 };

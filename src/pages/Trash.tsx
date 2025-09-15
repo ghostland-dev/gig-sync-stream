@@ -16,7 +16,10 @@ const mockTrashedMessages = [
     date: "Il y a 1h",
     unread: false,
     platform: "fiverr" as const,
-    body: "Cliquez ici pour découvrir cette offre incroyable qui va changer votre vie... [Message spam supprimé]"
+    body: "Cliquez ici pour découvrir cette offre incroyable qui va changer votre vie... [Message spam supprimé]",
+    starred: false,
+    urgency: 'low' as const,
+    labels: ['spam', 'supprime']
   },
   {
     id: "trash2",
@@ -26,7 +29,10 @@ const mockTrashedMessages = [
     date: "Hier",
     unread: false,
     platform: "upwork" as const,
-    body: "Encore des modifications à apporter. Ce n'est toujours pas ce que je veux. Je pense qu'on devrait tout recommencer...\n\n[Message supprimé - Client problématique]"
+    body: "Encore des modifications à apporter. Ce n'est toujours pas ce que je veux. Je pense qu'on devrait tout recommencer...\n\n[Message supprimé - Client problématique]",
+    starred: false,
+    urgency: 'low' as const,
+    labels: ['problematique', 'supprime']
   }
 ];
 
