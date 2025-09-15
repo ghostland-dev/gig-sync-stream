@@ -8,6 +8,8 @@ import { ErrorBoundary } from "@/components/ui/error-boundary";
 import { InstallPrompt } from "@/components/ui/install-prompt";
 import { PerformanceMonitor } from "@/components/ui/performance-monitor";
 import { usePerformance, useCoreWebVitals, useResourceTiming } from "@/hooks/usePerformance";
+import { AuthProvider } from "@/hooks/useAuth";
+import { ProtectedRoute } from "@/components/Layout/ProtectedRoute";
 import Index from "./pages/Index";
 import Messages from "./pages/Messages";
 import Statistics from "./pages/Statistics";
@@ -19,6 +21,7 @@ import Important from "./pages/Important";
 import Archives from "./pages/Archives";
 import Trash from "./pages/Trash";
 import Platform from "./pages/Platform";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,17 +38,62 @@ const AppContent = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/pending" element={<Pending />} />
-            <Route path="/important" element={<Important />} />
-            <Route path="/archives" element={<Archives />} />
-            <Route path="/trash" element={<Trash />} />
-            <Route path="/platform/:platform" element={<Platform />} />
-            <Route path="/statistics" element={<Statistics />} />
-            <Route path="/clients" element={<Clients />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Index />
+              </ProtectedRoute>
+            } />
+            <Route path="/messages" element={
+              <ProtectedRoute>
+                <Messages />
+              </ProtectedRoute>
+            } />
+            <Route path="/favorites" element={
+              <ProtectedRoute>
+                <Favorites />
+              </ProtectedRoute>
+            } />
+            <Route path="/pending" element={
+              <ProtectedRoute>
+                <Pending />
+              </ProtectedRoute>
+            } />
+            <Route path="/important" element={
+              <ProtectedRoute>
+                <Important />
+              </ProtectedRoute>
+            } />
+            <Route path="/archives" element={
+              <ProtectedRoute>
+                <Archives />
+              </ProtectedRoute>
+            } />
+            <Route path="/trash" element={
+              <ProtectedRoute>
+                <Trash />
+              </ProtectedRoute>
+            } />
+            <Route path="/platform/:platform" element={
+              <ProtectedRoute>
+                <Platform />
+              </ProtectedRoute>
+            } />
+            <Route path="/statistics" element={
+              <ProtectedRoute>
+                <Statistics />
+              </ProtectedRoute>
+            } />
+            <Route path="/clients" element={
+              <ProtectedRoute>
+                <Clients />
+              </ProtectedRoute>
+            } />
+            <Route path="/settings" element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
@@ -59,7 +107,9 @@ const AppContent = () => {
 
 const App = () => (
   <ErrorBoundary>
-    <AppContent />
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   </ErrorBoundary>
 );
 
