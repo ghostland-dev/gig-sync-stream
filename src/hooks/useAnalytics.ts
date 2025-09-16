@@ -1,162 +1,211 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import useLocalStorage from './useLocalStorage';
+import { useMessages } from './useMessages';
+import { useReply } from './useReply';
+import { useClients } from './useClients';
 
-// Basic analytics events
-interface AnalyticsEvent {
-  name: string;
-  properties?: Record<string, any>;
+export interface AnalyticsData {
+  period: 'day' | 'week' | 'month' | 'year';
+  startDate: string;
+  endDate: string;
+  metrics: {
+    messagesReceived: number;
+    messagesReplied: number;
+    responseRate: number;
+    averageResponseTime: number; // in hours
+    newClients: number;
+    revenue: number;
+    activeProjects: number;
+    completedProjects: number;
+  };
+  platformBreakdown: {
+    fiverr: { messages: number; revenue: number; clients: number };
+    upwork: { messages: number; revenue: number; clients: number };
+    malt: { messages: number; revenue: number; clients: number };
+    codeur: { messages: number; revenue: number; clients: number };
+  };
+  timeSeriesData: Array<{
+    date: string;
+    messages: number;
+    replies: number;
+    revenue: number;
+  }>;
+  topClients: Array<{
+    id: string;
+    name: string;
+    revenue: number;
+    projects: number;
+  }>;
 }
 
-// Simple analytics class
-class Analytics {
-  private userId: string | null = null;
-  private sessionId: string;
+const generateMockAnalytics = (period: 'day' | 'week' | 'month' | 'year'): AnalyticsData => {
+  const now = new Date();
+  let startDate: Date;
+  let endDate = now;
 
-  constructor() {
-    this.sessionId = this.generateSessionId();
-    this.userId = localStorage.getItem('analytics-user-id') || this.generateUserId();
+  switch (period) {
+    case 'day':
+      startDate = new Date(now);
+      startDate.setHours(0, 0, 0, 0);
+      break;
+    case 'week':
+      startDate = new Date(now);
+      startDate.setDate(now.getDate() - 7);
+      break;
+    case 'month':
+      startDate = new Date(now);
+      startDate.setMonth(now.getMonth() - 1);
+      break;
+    case 'year':
+      startDate = new Date(now);
+      startDate.setFullYear(now.getFullYear() - 1);
+      break;
   }
 
-  private generateSessionId(): string {
-    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  }
-
-  private generateUserId(): string {
-    const userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem('analytics-user-id', userId);
-    return userId;
-  }
-
-  track(eventName: string, properties: Record<string, any> = {}) {
-    const event: AnalyticsEvent & { timestamp: number; userId: string; sessionId: string } = {
-      name: eventName,
-      properties: {
-        ...properties,
-        url: window.location.href,
-        userAgent: navigator.userAgent,
-        timestamp: Date.now()
-      },
-      timestamp: Date.now(),
-      userId: this.userId!,
-      sessionId: this.sessionId
-    };
-
-    // In development, just log to console
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Analytics Event:', event);
-      return;
-    }
-
-    // Store events locally for now (in production, send to analytics service)
-    const events = JSON.parse(localStorage.getItem('analytics-events') || '[]');
-    events.push(event);
+  // Generate time series data
+  const timeSeriesData = [];
+  const daysDiff = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  
+  for (let i = 0; i < Math.min(daysDiff, 30); i++) {
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + i);
     
-    // Keep only last 100 events to prevent localStorage bloat
-    if (events.length > 100) {
-      events.shift();
-    }
-    
-    localStorage.setItem('analytics-events', JSON.stringify(events));
-  }
-
-  page(pageName: string, properties: Record<string, any> = {}) {
-    this.track('page_view', {
-      page: pageName,
-      ...properties
+    timeSeriesData.push({
+      date: date.toISOString().split('T')[0],
+      messages: Math.floor(Math.random() * 15) + 5,
+      replies: Math.floor(Math.random() * 12) + 3,
+      revenue: Math.floor(Math.random() * 2000) + 500
     });
   }
 
-  identify(userId: string, traits: Record<string, any> = {}) {
-    this.userId = userId;
-    localStorage.setItem('analytics-user-id', userId);
-    
-    this.track('identify', {
-      userId,
-      traits
-    });
-  }
+  return {
+    period,
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
+    metrics: {
+      messagesReceived: 127,
+      messagesReplied: 119,
+      responseRate: 93.7,
+      averageResponseTime: 1.2,
+      newClients: 8,
+      revenue: 15450,
+      activeProjects: 12,
+      completedProjects: 23
+    },
+    platformBreakdown: {
+      fiverr: { messages: 42, revenue: 6800, clients: 15 },
+      upwork: { messages: 38, revenue: 4950, clients: 12 },
+      malt: { messages: 26, revenue: 2400, clients: 8 },
+      codeur: { messages: 21, revenue: 1300, clients: 6 }
+    },
+    timeSeriesData,
+    topClients: [
+      { id: '1', name: 'TechCorp Solutions', revenue: 8500, projects: 5 },
+      { id: '2', name: 'Digital Marketing Pro', revenue: 4200, projects: 3 },
+      { id: '3', name: 'StartupX', revenue: 2800, projects: 2 },
+      { id: '4', name: 'E-commerce Giant', revenue: 2500, projects: 4 },
+      { id: '5', name: 'Creative Agency', revenue: 1900, projects: 2 }
+    ]
+  };
+};
 
-  // Get stored events (useful for debugging or batch sending)
-  getEvents(): AnalyticsEvent[] {
-    return JSON.parse(localStorage.getItem('analytics-events') || '[]');
-  }
-
-  // Clear stored events
-  clearEvents() {
-    localStorage.removeItem('analytics-events');
-  }
-}
-
-// Singleton instance
-const analytics = new Analytics();
-
-// React hook for analytics
 export const useAnalytics = () => {
-  const location = useLocation();
+  const [currentPeriod, setCurrentPeriod] = useLocalStorage<'day' | 'week' | 'month' | 'year'>('analytics-period', 'month');
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Track page views
-  useEffect(() => {
-    const pageName = location.pathname;
-    analytics.page(pageName, {
-      search: location.search,
-      hash: location.hash
-    });
-  }, [location]);
+  const getAnalytics = async (period?: 'day' | 'week' | 'month' | 'year'): Promise<AnalyticsData> => {
+    setIsLoading(true);
+    const selectedPeriod = period || currentPeriod;
+    
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // In a real app, you'd calculate this from actual data
+    const analyticsData = generateMockAnalytics(selectedPeriod);
+    
+    setIsLoading(false);
+    return analyticsData;
+  };
+
+  const calculateRealTimeMetrics = () => {
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    // Would calculate metrics from actual data
+    const messagesReceived = 127;
+    const messagesReplied = 119;
+    const responseRate = messagesReceived > 0 ? (messagesReplied / messagesReceived) * 100 : 0;
+    const averageResponseTime = 1.5; // hours
+
+    return {
+      messagesReceived,
+      messagesReplied,
+      responseRate: Math.round(responseRate * 10) / 10,
+      averageResponseTime
+    };
+  };
+
+  const getRevenueProjection = (period: 'month' | 'quarter' | 'year') => {
+    const activeProjectsRevenue = 12000;
+    const completedProjectsRevenue = 25000;
+
+    let multiplier = 1;
+    switch (period) {
+      case 'quarter':
+        multiplier = 3;
+        break;
+      case 'year':
+        multiplier = 12;
+        break;
+    }
+
+    const monthlyAverage = 5000;
+    
+    return {
+      pending: activeProjectsRevenue,
+      projected: monthlyAverage * multiplier,
+      current: completedProjectsRevenue
+    };
+  };
+
+  const exportAnalytics = async (format: 'csv' | 'pdf' | 'json') => {
+    setIsLoading(true);
+    
+    const analytics = await getAnalytics();
+    
+    // Simulate export delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // In a real app, you'd generate the actual file
+    const exportData = {
+      format,
+      generatedAt: new Date().toISOString(),
+      analytics
+    };
+    
+    // Create a download link (simplified)
+    const dataStr = format === 'json' 
+      ? JSON.stringify(exportData, null, 2)
+      : `Analytics Export - ${format.toUpperCase()}\nGenerated: ${new Date().toLocaleDateString()}`;
+    
+    const dataUri = 'data:application/octet-stream;charset=utf-8,' + encodeURIComponent(dataStr);
+    const exportFileDefaultName = `analytics-${currentPeriod}-${Date.now()}.${format}`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+    
+    setIsLoading(false);
+  };
 
   return {
-    track: analytics.track.bind(analytics),
-    page: analytics.page.bind(analytics),
-    identify: analytics.identify.bind(analytics),
-    getEvents: analytics.getEvents.bind(analytics),
-    clearEvents: analytics.clearEvents.bind(analytics)
+    currentPeriod,
+    setCurrentPeriod,
+    isLoading,
+    getAnalytics,
+    calculateRealTimeMetrics,
+    getRevenueProjection,
+    exportAnalytics
   };
 };
-
-// Track common user interactions
-export const useInteractionTracking = () => {
-  const { track } = useAnalytics();
-
-  const trackClick = (elementName: string, properties: Record<string, any> = {}) => {
-    track('click', {
-      element: elementName,
-      ...properties
-    });
-  };
-
-  const trackSearch = (query: string, results: number = 0) => {
-    track('search', {
-      query,
-      results
-    });
-  };
-
-  const trackPlatformSwitch = (platform: string) => {
-    track('platform_switch', {
-      platform
-    });
-  };
-
-  const trackMessageOpen = (messageId: string, platform: string) => {
-    track('message_open', {
-      messageId,
-      platform
-    });
-  };
-
-  const trackFeatureUse = (featureName: string, properties: Record<string, any> = {}) => {
-    track('feature_use', {
-      feature: featureName,
-      ...properties
-    });
-  };
-
-  return {
-    trackClick,
-    trackSearch,
-    trackPlatformSwitch,
-    trackMessageOpen,
-    trackFeatureUse
-  };
-};
-
-export default analytics;

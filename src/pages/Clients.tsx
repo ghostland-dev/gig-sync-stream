@@ -14,7 +14,8 @@ import {
   Star, 
   StarOff,
   ArrowUpDown,
-  AlertTriangle
+  AlertTriangle,
+  Eye
 } from "lucide-react";
 import { 
   Pagination, 
@@ -25,6 +26,8 @@ import {
   PaginationPrevious 
 } from "@/components/ui/pagination";
 import { useToast } from "@/hooks/use-toast";
+import { useClients } from "@/hooks/useClients";
+import { ClientDetail } from "@/components/Clients/ClientDetail";
 
 // Mock data for clients
 const mockClients = [
@@ -152,10 +155,14 @@ const mockClients = [
 
 export default function Clients() {
   const { toast } = useToast();
-  const [clients, setClients] = useState(mockClients);
+  const { clients, toggleClientStar, getClientStats } = useClients();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedClient, setSelectedClient] = useState<string | null>(null);
+  const [showClientDetail, setShowClientDetail] = useState(false);
   const itemsPerPage = 6;
+  
+  const stats = getClientStats();
 
   // Filter clients based on search query
   const filteredClients = useMemo(() => {
@@ -175,27 +182,70 @@ export default function Clients() {
 
   // Toggle star status for a client
   const toggleStarred = (clientId: string) => {
-    setClients(prevClients => 
-      prevClients.map(client => 
-        client.id === clientId 
-          ? { ...client, starred: !client.starred } 
-          : client
-      )
-    );
+    toggleClientStar(clientId);
     
     const client = clients.find(c => c.id === clientId);
     if (client) {
       toast({
-        title: client.starred ? "Retiré des favoris" : "Ajouté aux favoris",
-        description: `${client.name} a été ${client.starred ? "retiré des" : "ajouté aux"} favoris.`,
-        variant: client.starred ? "default" : "default",
+        title: client.starred ? "Ajouté aux favoris" : "Retiré des favoris", 
+        description: `${client.name} ${client.starred ? 'retiré des' : 'ajouté aux'} favoris.`,
       });
     }
   };
+  
+  const handleViewClient = (clientId: string) => {
+    setSelectedClient(clientId);
+    setShowClientDetail(true);
+  };
+
+  if (showClientDetail && selectedClient) {
+    return (
+      <Dashboard>
+        <div className="p-6">
+          <ClientDetail 
+            clientId={selectedClient}
+            onEdit={() => console.log('Edit client')}
+            onClose={() => {
+              setShowClientDetail(false);
+              setSelectedClient(null);
+            }}
+          />
+        </div>
+      </Dashboard>
+    );
+  }
 
   return (
     <Dashboard>
       <div className="p-6 space-y-6">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <Card>
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold">{stats.totalClients}</div>
+              <p className="text-sm text-muted-foreground">Total clients</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold">{stats.activeClients}</div>
+              <p className="text-sm text-muted-foreground">Clients actifs</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold">{stats.totalRevenue.toLocaleString('fr-FR')}€</div>
+              <p className="text-sm text-muted-foreground">Chiffre d'affaires</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold">{Math.round(stats.averageRevenue).toLocaleString('fr-FR')}€</div>
+              <p className="text-sm text-muted-foreground">CA moyen par client</p>
+            </CardContent>
+          </Card>
+        </div>
+        
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Clients</h1>
@@ -281,7 +331,7 @@ export default function Clients() {
                         <td className="py-3 px-2">
                           <PlatformBadge platform={client.platform as any} />
                         </td>
-                        <td className="py-3 px-2">{client.projects}</td>
+                        <td className="py-3 px-2">{client.totalProjects}</td>
                         <td className="py-3 px-2">
                           <Badge variant={client.status === 'active' ? 'default' : 'secondary'}>
                             {client.status === 'active' ? 'Actif' : 'Inactif'}
@@ -292,6 +342,15 @@ export default function Clients() {
                         </td>
                         <td className="py-3 px-2">
                           <div className="flex justify-center gap-2">
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="h-8 w-8"
+                              onClick={() => handleViewClient(client.id)}
+                              title="Voir le détail"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Button>
                             <Button 
                               variant="ghost" 
                               size="icon" 
