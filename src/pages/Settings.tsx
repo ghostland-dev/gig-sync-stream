@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Dashboard } from "@/components/Layout/Dashboard";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,15 +8,115 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { User, BellRing, Shield, Key, Globe, BellOff } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { useSettings } from "@/hooks/useSettings";
+import { useToast } from "@/hooks/use-toast";
+import { User, BellRing, Shield, Key, Globe, Download, Upload, Save } from "lucide-react";
 
 export default function Settings() {
+  const { 
+    profile, 
+    notifications, 
+    preferences, 
+    security, 
+    integrations,
+    updateProfile,
+    updateNotifications, 
+    updatePreferences,
+    changePassword,
+    enable2FA,
+    disable2FA,
+    connectPlatform,
+    disconnectPlatform,
+    exportSettings,
+    isLoading
+  } = useSettings();
+  
+  const { toast } = useToast();
+  const [passwords, setPasswords] = useState({
+    current: '',
+    new: '',
+    confirm: ''
+  });
+
+  const handleSaveProfile = async () => {
+    await updateProfile(profile);
+    toast({
+      title: "Profil mis à jour",
+      description: "Vos informations personnelles ont été sauvegardées."
+    });
+  };
+
+  const handleSaveNotifications = async () => {
+    await updateNotifications(notifications);
+    toast({
+      title: "Préférences sauvegardées",
+      description: "Vos préférences de notifications ont été mises à jour."
+    });
+  };
+
+  const handlePasswordChange = async () => {
+    if (passwords.new !== passwords.confirm) {
+      toast({
+        title: "Erreur",
+        description: "Les mots de passe ne correspondent pas.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const result = await changePassword(passwords.current, passwords.new);
+    if (result.success) {
+      toast({
+        title: "Mot de passe modifié",
+        description: "Votre mot de passe a été mis à jour avec succès."
+      });
+      setPasswords({ current: '', new: '', confirm: '' });
+    } else {
+      toast({
+        title: "Erreur",
+        description: result.error || "Impossible de changer le mot de passe.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleToggle2FA = async () => {
+    if (security.twoFactorEnabled) {
+      const result = await disable2FA();
+      if (result.success) {
+        toast({
+          title: "2FA désactivée",
+          description: "L'authentification à deux facteurs a été désactivée."
+        });
+      }
+    } else {
+      const result = await enable2FA();
+      if (result.success) {
+        toast({
+          title: "2FA activée",
+          description: "L'authentification à deux facteurs a été activée."
+        });
+      }
+    }
+  };
+
   return (
     <Dashboard>
       <div className="p-6 space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Paramètres</h1>
-          <p className="text-muted-foreground">Gérez les paramètres de votre compte et vos préférences</p>
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Paramètres</h1>
+            <p className="text-muted-foreground">Gérez les paramètres de votre compte et vos préférences</p>
+          </div>
+          <Button 
+            variant="outline" 
+            onClick={exportSettings}
+            className="gap-2"
+          >
+            <Download className="h-4 w-4" />
+            Exporter les paramètres
+          </Button>
         </div>
 
         <Tabs defaultValue="account" className="w-full">

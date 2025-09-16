@@ -23,6 +23,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useAuthContext } from '@/hooks/useAuth';
 import { useMessages } from '@/hooks/useMessages';
+import { NotificationCenter } from '@/components/Notifications/NotificationCenter';
 import { useReply } from '@/hooks/useReply';
 import { 
   DropdownMenu,
@@ -75,14 +76,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
         <div className="flex items-center space-x-2">
           <span className="font-bold text-2xl text-white">GigSync</span>
         </div>
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className="md:hidden text-white hover:bg-sidebar-accent hover:text-sidebar"
-          onClick={onClose}
-        >
-          <X className="h-5 w-5" />
-        </Button>
+        <div className="flex items-center gap-2">
+          <NotificationCenter />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="md:hidden text-white hover:bg-sidebar-accent hover:text-sidebar"
+            onClick={onClose}
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
       </div>
       
       <Separator className="bg-sidebar-border" />
